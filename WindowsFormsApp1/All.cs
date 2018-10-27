@@ -18,7 +18,14 @@ namespace WindowsFormsApp1
         public All()
         {
             InitializeComponent();
-            Functions.LoadData(this.dataGridView1);
+            try
+            {
+                Functions.LoadData(this.dataGridView1);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Could not connect to database!");
+            }
         }
 
         private void All_Load(object sender, EventArgs e)
@@ -30,28 +37,36 @@ namespace WindowsFormsApp1
         {
             if (radioName.Checked)
             {
-                MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
-                dbInfo.Server = Properties.Settings.Default.servername;
-                dbInfo.UserID = Properties.Settings.Default.userid;
-                dbInfo.Password = Properties.Settings.Default.password;
-                dbInfo.Port = UInt32.Parse(Properties.Settings.Default.port);
-                dbInfo.Database = Properties.Settings.Default.database;
-                dbInfo.SslMode = MySqlSslMode.None;
+                try
+                {
+                    MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
+                    dbInfo.Server = Properties.Settings.Default.servername;
+                    dbInfo.UserID = Properties.Settings.Default.userid;
+                    dbInfo.Password = Properties.Settings.Default.password;
+                    dbInfo.Port = UInt32.Parse(Properties.Settings.Default.port);
+                    dbInfo.Database = Properties.Settings.Default.database;
+                    dbInfo.SslMode = (MySqlSslMode)Properties.Settings.Default.sslmode;
 
-                MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
-                dbConn.Open();
-                MySqlDataAdapter dataAdapter;
-                dataAdapter = new MySqlDataAdapter("SELECT * FROM `all_people` WHERE Name LIKE '" + textSearch.Text + "%'", dbConn);
+                    MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
+                    dbConn.Open();
+                    MySqlDataAdapter dataAdapter;
+                    dataAdapter = new MySqlDataAdapter("SELECT * FROM `all_people` WHERE Firstname LIKE '" + textSearch.Text + "%'", dbConn);
 
-                DataTable table = new DataTable();
-                dataAdapter.Fill(table);
-                dataGridView1.DataSource = table;
+                    DataTable table = new DataTable();
+                    dataAdapter.Fill(table);
+                    dataGridView1.DataSource = table;
+                }
+                catch (Exception)
+                {
+
+                }
+                
             }
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            if (radioMore.Checked)
+            try
             {
                 MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
                 dbInfo.Server = Properties.Settings.Default.servername;
@@ -64,20 +79,32 @@ namespace WindowsFormsApp1
                 MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
                 dbConn.Open();
                 MySqlDataAdapter dataAdapter;
-                dataAdapter = new MySqlDataAdapter("SELECT * FROM `all_people` WHERE Name LIKE '" + textSearch.Text + "%' OR Company LIKE '" + textSearch.Text + "%' OR Position LIKE '" + textSearch.Text + "%' OR Alias LIKE '" + textSearch.Text + "%' OR Email LIKE '" + textSearch.Text + "%'", dbConn);
+                dataAdapter = new MySqlDataAdapter("SELECT * FROM `all_people` WHERE `Firstname` LIKE '" + textSearch.Text + "%' OR `Lastname` LIKE '" + textSearch.Text + "%' OR `Alias` LIKE '" + textSearch.Text + "%' OR `Date of Birth` LIKE '" + textSearch.Text + "%'", dbConn);
 
                 DataTable table = new DataTable();
                 dataAdapter.Fill(table);
                 dataGridView1.DataSource = table;
             }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            showID = dataGridView1[0, e.RowIndex].Value.ToString();
-            UserInfo userInfo = new UserInfo();
-            userInfo.ShowDialog();
-            Functions.LoadData(this.dataGridView1);
+            try
+            {
+                showID = dataGridView1[0, e.RowIndex].Value.ToString();
+                UserInfo userInfo = new UserInfo();
+                userInfo.ShowDialog();
+                Functions.LoadData(this.dataGridView1);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong!");
+            }
+            
         }
 
         private void buttonExport_Click(object sender, EventArgs e)
@@ -112,7 +139,6 @@ namespace WindowsFormsApp1
                     int a = dbComm.ExecuteNonQuery();
                     if (a != 0)
                     {
-                        MessageBox.Show("Record deleted!");
                         this.DialogResult = DialogResult.OK;
                         Functions.LoadData(dataGridView1);
                     }

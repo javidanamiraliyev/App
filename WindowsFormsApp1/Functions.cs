@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.IO;
 using System.Security.Cryptography;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -17,13 +18,7 @@ namespace WindowsFormsApp1
 {
     class Functions
     {
-        
-        public static bool isDate(string date)
-        {
-            DateTime temp;            
-            return DateTime.TryParse(date, out temp);
-        }
-        
+
         public static void Export(string foldername)
         {
             MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
@@ -92,52 +87,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        public static string timeConversion(string time12)
-        {
-            int h12 = Convert.ToInt32(time12.Substring(0, 2));
-            string am_pm = time12.Substring(8, 2);
-            string h24 = "00";
-            if (am_pm == "AM" && h12 == 12)
-            {
-                h24 = "00";
-            }
-            if (am_pm == "PM" && h12 == 12)
-            {
-                h24 = "12";
-            }
-            if (am_pm == "AM" && h12 < 12)
-            {
-                h24 = "0" + h12.ToString();
-            }
-            if (am_pm == "PM" && h12 < 12)
-            {
-                h24 = (h12 + 12).ToString();
-            }
-            return h24 + time12.Substring(2, 6);
-        }
-
-        public static string Auto_Increment()
-        {
-            string ID = "";
-            MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
-            dbInfo.Server = Properties.Settings.Default.servername;
-            dbInfo.UserID = Properties.Settings.Default.userid;
-            dbInfo.Password = Properties.Settings.Default.password;
-            dbInfo.Port = UInt32.Parse(Properties.Settings.Default.port);
-            dbInfo.Database = Properties.Settings.Default.database;
-            dbInfo.SslMode = MySqlSslMode.None;
-
-            MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
-            MySqlCommand dbComm = new MySqlCommand("SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'sys' AND TABLE_NAME = 'people'; ",dbConn);
-            dbConn.Open();
-            MySqlDataReader reader = dbComm.ExecuteReader();
-            while (reader.Read())
-            {
-                ID = reader.GetString(0);
-            }
-            return ID;
-        }
-
         public static bool IsValidEmail(string strIn)
         {
             if (String.IsNullOrEmpty(strIn))
@@ -157,7 +106,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        public static void Register(string Name, string Lastname, string Gender, string Email, string DateOfBirth, string Alias)
+        public static void Register(string Name, string Lastname, string Gender, string DateOfBirth, string Alias)
         {
             MySqlConnectionStringBuilder dbInfo = new MySqlConnectionStringBuilder();
             dbInfo.Server = Properties.Settings.Default.servername;
@@ -169,11 +118,10 @@ namespace WindowsFormsApp1
 
             MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
             dbConn.Open();
-            MySqlCommand dbComm = new MySqlCommand("INSERT INTO people(`Name`,`Lastname`,`Gender`,`Email`,`DateOfBirth`,`Alias`) VALUES(@Name, @Lastname, @Gender, @Email, @DateOfBirth, @Alias);", dbConn);
-            dbComm.Parameters.AddWithValue("@Name", Name);
+            MySqlCommand dbComm = new MySqlCommand("INSERT INTO people(`Firstname`,`Lastname`,`Gender`,`DateOfBirth`,`Alias`) VALUES(@Firstname, @Lastname, @Gender, @DateOfBirth, @Alias);", dbConn);
+            dbComm.Parameters.AddWithValue("@Firstname", Name);
             dbComm.Parameters.AddWithValue("@Lastname", Lastname);
             dbComm.Parameters.AddWithValue("@Gender", Gender);
-            dbComm.Parameters.AddWithValue("@Email", Email);
             dbComm.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
             dbComm.Parameters.AddWithValue("@Alias", Alias);
 

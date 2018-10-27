@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.textSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,8 +47,15 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.buttonRefresh = new System.Windows.Forms.Button();
+            this.sysDataSet = new WindowsFormsApp1.sysDataSet();
+            this.sysDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.allpeopleBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.all_peopleTableAdapter = new WindowsFormsApp1.sysDataSetTableAdapters.all_peopleTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sysDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sysDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.allpeopleBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -55,8 +63,8 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Gainsboro;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -96,16 +104,16 @@
             this.radioName.Checked = true;
             this.radioName.Location = new System.Drawing.Point(75, 29);
             this.radioName.Name = "radioName";
-            this.radioName.Size = new System.Drawing.Size(67, 17);
+            this.radioName.Size = new System.Drawing.Size(84, 17);
             this.radioName.TabIndex = 3;
             this.radioName.TabStop = true;
-            this.radioName.Text = "by Name";
+            this.radioName.Text = "by Firstname";
             this.radioName.UseVisualStyleBackColor = true;
             // 
             // radioMore
             // 
             this.radioMore.AutoSize = true;
-            this.radioMore.Location = new System.Drawing.Point(158, 29);
+            this.radioMore.Location = new System.Drawing.Point(165, 29);
             this.radioMore.Name = "radioMore";
             this.radioMore.Size = new System.Drawing.Size(91, 17);
             this.radioMore.TabIndex = 4;
@@ -209,6 +217,25 @@
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
+            // sysDataSet
+            // 
+            this.sysDataSet.DataSetName = "sysDataSet";
+            this.sysDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // sysDataSetBindingSource
+            // 
+            this.sysDataSetBindingSource.DataSource = this.sysDataSet;
+            this.sysDataSetBindingSource.Position = 0;
+            // 
+            // allpeopleBindingSource
+            // 
+            this.allpeopleBindingSource.DataMember = "all_people";
+            this.allpeopleBindingSource.DataSource = this.sysDataSet;
+            // 
+            // all_peopleTableAdapter
+            // 
+            this.all_peopleTableAdapter.ClearBeforeFill = true;
+            // 
             // All
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,6 +251,8 @@
             this.Controls.Add(this.textSearch);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
+            this.MaximumSize = new System.Drawing.Size(871, 489);
+            this.MinimumSize = new System.Drawing.Size(871, 489);
             this.Name = "All";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "All";
@@ -231,6 +260,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sysDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sysDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.allpeopleBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,5 +287,9 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.BindingSource sysDataSetBindingSource;
+        private sysDataSet sysDataSet;
+        private System.Windows.Forms.BindingSource allpeopleBindingSource;
+        private sysDataSetTableAdapters.all_peopleTableAdapter all_peopleTableAdapter;
     }
 }

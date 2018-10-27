@@ -37,7 +37,6 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -50,7 +49,7 @@
             this.textPosition = new System.Windows.Forms.TextBox();
             this.textCompany = new System.Windows.Forms.TextBox();
             this.textLastname = new System.Windows.Forms.TextBox();
-            this.textName = new System.Windows.Forms.TextBox();
+            this.textFirstname = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -118,7 +117,6 @@
             this.tabPage1.Controls.Add(this.label23);
             this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.label22);
-            this.tabPage1.Controls.Add(this.label20);
             this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.label17);
@@ -131,7 +129,7 @@
             this.tabPage1.Controls.Add(this.textPosition);
             this.tabPage1.Controls.Add(this.textCompany);
             this.tabPage1.Controls.Add(this.textLastname);
-            this.tabPage1.Controls.Add(this.textName);
+            this.tabPage1.Controls.Add(this.textFirstname);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.label5);
@@ -191,16 +189,6 @@
             this.label22.Size = new System.Drawing.Size(11, 13);
             this.label22.TabIndex = 48;
             this.label22.Text = "*";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.ForeColor = System.Drawing.Color.Red;
-            this.label20.Location = new System.Drawing.Point(99, 177);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(11, 13);
-            this.label20.TabIndex = 47;
-            this.label20.Text = "*";
             // 
             // label19
             // 
@@ -314,13 +302,13 @@
             this.textLastname.Size = new System.Drawing.Size(243, 20);
             this.textLastname.TabIndex = 36;
             // 
-            // textName
+            // textFirstname
             // 
-            this.textName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textName.Location = new System.Drawing.Point(116, 43);
-            this.textName.Name = "textName";
-            this.textName.Size = new System.Drawing.Size(243, 20);
-            this.textName.TabIndex = 35;
+            this.textFirstname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textFirstname.Location = new System.Drawing.Point(116, 43);
+            this.textFirstname.Name = "textFirstname";
+            this.textFirstname.Size = new System.Drawing.Size(243, 20);
+            this.textFirstname.TabIndex = 35;
             // 
             // label6
             // 
@@ -408,9 +396,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.Location = new System.Drawing.Point(11, 46);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.Size = new System.Drawing.Size(52, 13);
             this.label8.TabIndex = 24;
-            this.label8.Text = "Name";
+            this.label8.Text = "Firstname";
             // 
             // label2
             // 
@@ -472,7 +460,6 @@
         private System.Windows.Forms.MaskedTextBox textPhone;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
@@ -485,7 +472,7 @@
         private System.Windows.Forms.TextBox textPosition;
         private System.Windows.Forms.TextBox textCompany;
         private System.Windows.Forms.TextBox textLastname;
-        private System.Windows.Forms.TextBox textName;
+        private System.Windows.Forms.TextBox textFirstname;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label5;

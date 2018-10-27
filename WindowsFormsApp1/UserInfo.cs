@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,18 +34,18 @@ namespace WindowsFormsApp1
             while (reader.Read())
             {
                 textID.Text = reader["ID"].ToString();
-                textName.Text = reader["Name"].ToString();
+                textFirstname.Text = reader["FirstName"].ToString();
                 textLastname.Text = reader["Lastname"].ToString();
                 comboGender.Text = reader["Gender"].ToString();
                 textCompany.Text = reader["Company"].ToString();
                 textPosition.Text = reader["Position"].ToString();
-                textEmail.Text = reader["email"].ToString();
-                textAddress.Text = reader["address"].ToString();
+                textEmail.Text = reader["Email"].ToString();
+                textAddress.Text = reader["Address"].ToString();
                 textPhone.Text = reader["Phone"].ToString();
-                dateBirth.Text = reader["DateOfBirth"].ToString();
+                dateBirth.Value = DateTime.ParseExact(reader["DateOfBirth"].ToString(), "dd.MM.yyyy",CultureInfo.InvariantCulture);
                 textAlias.Text = reader["Alias"].ToString();
-                if(File.Exists(@"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + textAlias.Text + ".jpg")){
-                    using(FileStream stream = new FileStream(@"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + textAlias.Text + ".jpg", FileMode.Open, FileAccess.Read))
+                if(File.Exists(Directory.GetParent(Directory.GetParent(Directory.GetParent( AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString())+"\\Resources\\" + textAlias.Text + ".jpg")){
+                    using(FileStream stream = File.Open(Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString()) + "\\Resources\\" + textAlias.Text + ".jpg", FileMode.Open, FileAccess.Read))
                     {
                         pictureBox.Image = Image.FromStream(stream);
                     }
@@ -55,11 +56,6 @@ namespace WindowsFormsApp1
                 }
                 this.Text = textAlias.Text;
             }
-        }
-
-        private void buttonLogOut_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
         }
         
         private void buttonUpload_Click(object sender, EventArgs e)
@@ -72,10 +68,10 @@ namespace WindowsFormsApp1
                 Console.WriteLine(theDialog.FileName);
                 try
                 {
-                    if(File.Exists(@"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + textAlias.Text + ".jpg"))
-                    File.Delete(@"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + textAlias.Text + ".jpg");
-                    File.Copy(theDialog.FileName, @"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + textAlias.Text + ".jpg");
-                    pictureBox.Image = Image.FromFile(@"C:\Users\javidana\source\repos\WindowsFormsApp1\WindowsFormsApp1\Resources\" + this.textAlias.Text + Path.GetExtension(theDialog.FileName));
+                    if(File.Exists(Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString()) + "\\Resources\\" + textAlias.Text + ".jpg"))
+                    File.Delete(Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString()) + "\\Resources\\" + textAlias.Text + ".jpg");
+                    File.Copy(theDialog.FileName, Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString()) + "\\Resources\\" + textAlias.Text + ".jpg");
+                    pictureBox.Image = Image.FromFile(Directory.GetParent(Directory.GetParent(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).ToString()).ToString())+"\\Resources\\" + this.textAlias.Text + Path.GetExtension(theDialog.FileName));
                     MessageBox.Show("Picture was uploaded successfully", "Success", MessageBoxButtons.OK);
                 }
                 catch (Exception ex)
@@ -88,18 +84,19 @@ namespace WindowsFormsApp1
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            string newName, newGender, newCompany, newPosition, newEmail, newAddress, newPhone, newDateOfBirth;
-            if (textName.Text != "" &&textName.Text!=" " &&textAlias.Text!="" && textEmail.Text != "" && dateBirth.Text != "")
+            string newFirstname,newLastname, newGender, newCompany, newPosition, newEmail, newAddress, newPhone, newDateOfBirth;
+            if (textFirstname.Text != "" && textLastname.Text!="")
             {
-                newName = textName.Text;
-                newEmail = textEmail.Text;
-                newDateOfBirth = dateBirth.Text;
+                newFirstname = textFirstname.Text;
+                newLastname = textLastname.Text;
             }
             else
             {
                 MessageBox.Show("Check the required fields!");
                 return;
             }
+            newDateOfBirth = dateBirth.Text;
+            newEmail = textEmail.Text;
             newGender = comboGender.Text;
             newAddress = textAddress.Text;
             newPhone = textPhone.Text;
@@ -118,7 +115,7 @@ namespace WindowsFormsApp1
                 MySqlConnection dbConn = new MySqlConnection(dbInfo.ToString());
                 dbConn.Open();
                 MySqlCommand dbComm = new MySqlCommand("UPDATE people "+
-                    "SET Name='"+newName+"', Gender='"+newGender+"',Company='"+newCompany+"',Position='"+newPosition+"', email='"+newEmail+"',address='"+newAddress+"',Phone='"+newPhone+"',DateOfBirth='"+newDateOfBirth+"' WHERE ID='"+textID.Text+"';" ,dbConn);
+                    "SET Firstname='"+newFirstname+"', Lastname='"+newLastname+"', Gender='"+newGender+"',Company='"+newCompany+"',Position='"+newPosition+"', Email='"+newEmail+"',Address='"+newAddress+"',Phone='"+newPhone+"',DateOfBirth='"+newDateOfBirth+"' WHERE ID='"+textID.Text+"';" ,dbConn);
                 int a = dbComm.ExecuteNonQuery();
                 if (a != 0)
                 {
